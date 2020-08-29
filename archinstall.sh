@@ -211,11 +211,17 @@ Name=*
 DHCP=ipv4
 EOT
 
-#
+# +-+-+-+-+-+-+-+
 # ENABLE OPENSSH
-#
+# +-+-+-+-+-+-+-+
 
 systemctl enable sshd
+
+# +-+-+-+-+-+-
+# ENABLE IWD
+# +-+-+-+-+-+-
+
+systemctl enable iwd.service
 
 # +-+-+-+-+-+-+
 # CREATE USER
