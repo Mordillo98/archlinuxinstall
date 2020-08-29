@@ -127,7 +127,7 @@ mount ${DRIVE_PART1} /mnt/boot
 # +-+-+-+-+-+-+-+-+-+-+-+-+-+-
 
 EDITOR="vim"
-NETWORKING="iwd"
+NETWORKING="iwd broadcom-wl"
 DEPENDENCIES="go git wget"
 OPENSSH="openssh"
 OTHERS="neofetch"
