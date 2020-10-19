@@ -6,10 +6,10 @@ set -e
 # Variables
 # +-+-+-+-+-+
 
-DRIVE="/dev/sda"
-DRIVE_PART1=${DRIVE}1
-DRIVE_PART2=${DRIVE}2
-DRIVE_PART3=${DRIVE}3
+DRIVE="/dev/mmcblk0"
+DRIVE_PART1=${DRIVE}p1
+DRIVE_PART2=${DRIVE}p2
+DRIVE_PART3=${DRIVE}p3
 
 TIMEZONE="America/Toronto"
 REGION="en_CA.UTF-8 UTF-8" 
@@ -256,6 +256,27 @@ printf "alias reboot=\"sudo systemctl reboot\"\n" >> /etc/profile
 printf "alias poweroff=\"sudo systemctl poweroff\"\n" >> /etc/profile
 printf "alias halt=\"sudo systemctl halt\"\n" >> /etc/profile
 
+# +-+-+-+-+-+-+-+-+-+-
+# LOGIN AUTOMATICALLY
+# +-+-+-+-+-+-+-+-+-+-
+
+mkdir -p /etc/systemd/system/getty@tty1.service.d/
+
+printf "[Service]\n" > /etc/systemd/system/getty@tty1.service.d/override.conf 
+printf "ExecStart=\n" >> /etc/systemd/system/getty@tty1.service.d/override.conf 
+printf "ExecStart=-/usr/bin/agetty --autologin $ARCH_USER --noclear %%I \$" >> /etc/systemd/system/getty@tty1.service.d/override.conf 
+printf "TERM" >> /etc/systemd/system/getty@tty1.service.d/override.conf 
+
+
+# +-+-+-+-+-+-+-+-+
+# CONNECT WIRELESS
+# +-+-+-+-+-+-+-+-+
+
+cat > "/var/lib/iwd/Nautilus-5G 2nd Floor.psk" << "EOT"
+[Security]
+PreSharedKey=940ccfa5aeaeaa5086998534d94790bdcbb07f7dc7d16fee4ff2eb8ab4072765
+Passphrase=BadRaccoon73
+EOT
 
 EOF
 
