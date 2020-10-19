@@ -272,6 +272,8 @@ printf "TERM" >> /etc/systemd/system/getty@tty1.service.d/override.conf
 # CONNECT WIRELESS
 # +-+-+-+-+-+-+-+-+
 
+mkdir -p /var/lib/iwd
+
 cat > "/var/lib/iwd/Nautilus-5G 2nd Floor.psk" << "EOT"
 [Security]
 PreSharedKey=940ccfa5aeaeaa5086998534d94790bdcbb07f7dc7d16fee4ff2eb8ab4072765
