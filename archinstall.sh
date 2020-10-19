@@ -24,6 +24,27 @@ USER_PSW="archlinuxpsw"
 
 MIRROR_LINK="https://archlinux.org/mirrorlist/?country=CA&protocol=https&ip_version=4"
 
+CYAN='\033[1;36m'
+WHITE='\033[1;37m'
+YELLOW='\033[1;33m'
+RED='\033[1;31m'
+BCK_RED='\033[1;41m'
+NC='\033[0m'
+
+# +-+-+-+-+-+-+-+-+-+
+# COUNTDOWN WARMING
+# +-+-+-+-+-+-+-+-+-+
+
+printf "${CYAN}Press Control-C to Cancel\n\n"
+printf "${RED}THIS WILL DESTROY ALL CONTENT OF ${WHITE}${BCK_RED}${DRIVE^^}${NC}${RED} !!!\n\n"
+
+for i in {30..1}
+do
+	printf "${YELLOW}Automatic install will start in... ${WHITE}$i \r"
+        sleep 1
+done	
+
+printf "${NC}\n\n"
 
 # 
 # DEPENDENCIES
