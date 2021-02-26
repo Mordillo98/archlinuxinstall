@@ -217,7 +217,7 @@ printf "${RED}THIS WILL DESTROY ALL CONTENT OF ${WHITE}${BCK_RED}${DRIVE^^}${NC}
 # launched too early.
 # +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
 
-countsleep "Automatic install will start in... " 10 
+countsleep "Automatic install will start in... " 30 
 
 # +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 # INSTALL THE NEEDED DEPENDENCIES 
