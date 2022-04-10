@@ -190,7 +190,7 @@ fi
 # +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
 
 clear
-printf "\n\n${WHITE}ARCHBANG RETRO INSTALL SCRIPT\n"
+printf "\n\n${WHITE}ARCH LINUX INSTALL SCRIPT\n"
 printf "=============================\n\n"
 printf "${CYAN}Press Control-C to Cancel\n\n"
 printf "${GREEN}FIRMWARE    = ${CYAN}${FIRMWARE}\n\n"
@@ -217,7 +217,7 @@ printf "${RED}THIS WILL DESTROY ALL CONTENT OF ${WHITE}${BCK_RED}${DRIVE^^}${NC}
 # launched too early.
 # +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
 
-countsleep "Automatic install will start in... " 30 
+countsleep "Automatic install will start in... " 10 
 
 # +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 # INSTALL THE NEEDED DEPENDENCIES 
@@ -228,10 +228,6 @@ pacman -Sy > /dev/null
 
 if ! pacman -Qs dmidecode > /dev/null ; then
 	pacman -S dmidecode --noconfirm > /dev/null
-fi
-
-if ! pacman -Qs wget > /dev/null ; then
-	pacman -S wget --noconfirm > /dev/null
 fi
 
 if ! pacman -Qs reflector > /dev/null ; then
@@ -323,7 +319,7 @@ mount ${DRIVE_PART1} /mnt/boot
 # +-+-+-+-+-+-+-+-+
 
 EDITOR="vim"
-DEPENDENCIES="git wget reflector net-tools moreutils"
+DEPENDENCIES="git reflector net-tools moreutils"
 NETWORK="iwd broadcom-wl"
 OPENSSH="openssh"
 OTHERS="neofetch"
@@ -439,7 +435,7 @@ useradd -m -G wheel -s /bin/bash $ARCH_USER
 
 echo "${ARCH_USER}:${USER_PSW}" | chpasswd
 
-sed -i 's/# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
+sed -i 's/# %wheel ALL=(ALL:ALL) NOPASSWD: ALL/%wheel ALL=(ALL:ALL) NOPASSWD: ALL/' /etc/sudoers
 
 # +-+-+-+-
 # YAY-BIN
