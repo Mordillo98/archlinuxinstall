@@ -8,7 +8,7 @@ set -e  # Script must stop if there is an error.
 
 FIRMWARE="UEFI"                # Choose BIOS or UEFI
 
-DRIVE="/dev/sda"               # This drive will be formatted
+DRIVE="/dev/vda"               # This drive will be formatted
 DRIVE_PART1=${DRIVE}1          # boot partition
 DRIVE_PART2=${DRIVE}2          # swap partition
 DRIVE_PART3=${DRIVE}3          # root partition
@@ -24,7 +24,7 @@ ARCH_USER="archlinuxuser"
 USER_PSW="archlinuxpsw"
 ROOT_PSW="archlinuxroot"
 
-REFLECTOR_COUNTRY="Canada"
+REFLECTOR_COUNTRY="United States"
 
 # +-+-+-+-+-+-
 # COLOR CODES
@@ -217,7 +217,7 @@ printf "${RED}THIS WILL DESTROY ALL CONTENT OF ${WHITE}${BCK_RED}${DRIVE^^}${NC}
 # launched too early.
 # +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
 
-countsleep "Automatic install will start in... " 10 
+countsleep "Automatic install will start in... " 30 
 
 # +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 # INSTALL THE NEEDED DEPENDENCIES 
@@ -240,7 +240,7 @@ fi
 
 printf "${YELLOW}Setting up the best mirrors from ${REFLECTOR_COUNTRY} for this live session.\n\n${NC}" 
 
-reflector --country ${REFLECTOR_COUNTRY} --age 12 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+reflector --country "${REFLECTOR_COUNTRY}" --age 12 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 
 pacman -Sy > /dev/null
 
@@ -481,6 +481,10 @@ printf "ExecStart=-/usr/bin/agetty --autologin $ARCH_USER --noclear %%I \$" >> /
 printf "TERM" >> /etc/systemd/system/getty@tty1.service.d/override.conf
 
 EOF
+
+echo
+echo "INSTALLATION COMPLETED"
+echo
 
 #
 # DONE
