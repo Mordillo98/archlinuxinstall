@@ -1,6 +1,8 @@
 #!/bin/bash
 
-set -e  # Script must stop if there is an error.
+# set -e  # Script must stop if there is an error.
+
+# set -x
 
 # +-+-+-+-+-
 # VARIABLES
@@ -8,7 +10,7 @@ set -e  # Script must stop if there is an error.
 
 FIRMWARE="UEFI"                # Choose BIOS or UEFI
 
-DRIVE="/dev/vda"               # This drive will be formatted
+DRIVE="/dev/sda"               # This drive will be formatted
 DRIVE_PART1=${DRIVE}1          # boot partition
 DRIVE_PART2=${DRIVE}2          # swap partition
 DRIVE_PART3=${DRIVE}3          # root partition
@@ -24,7 +26,7 @@ ARCH_USER="archlinuxuser"
 USER_PSW="archlinuxpsw"
 ROOT_PSW="archlinuxroot"
 
-REFLECTOR_COUNTRY="United States"
+REFLECTOR_COUNTRY="Canada"
 
 # +-+-+-+-+-+-
 # COLOR CODES
@@ -268,10 +270,10 @@ if [ ${FIRMWARE} = "BIOS" ]; then
   parted -a optimal $DRIVE --script mklabel msdos
   parted -a optimal $DRIVE --script unit mib
 
-  parted -a optimal $DRIVE --script mkpart primary 2048 2176
+  parted -a optimal $DRIVE --script mkpart primary 2048 3072
   parted -a optimal $DRIVE --script set 1 boot on
 
-  parted -a optimal $DRIVE --script mkpart primary 2176 $SWAP_SIZE
+  parted -a optimal $DRIVE --script mkpart primary 3072 $SWAP_SIZE
 
   parted -a optimal $DRIVE --script mkpart primary $SWAP_SIZE -- -1
 
@@ -279,11 +281,11 @@ else
   parted -a optimal $DRIVE --script mklabel gpt
   parted -a optimal $DRIVE --script unit mib
 
-  parted -a optimal $DRIVE --script mkpart primary 1 129
+  parted -a optimal $DRIVE --script mkpart primary 1 1025
   parted -a optimal $DRIVE --script name 1 boot
   parted -a optimal $DRIVE --script set 1 boot on
 
-  parted -a optimal $DRIVE --script mkpart primary 129 $SWAP_SIZE
+  parted -a optimal $DRIVE --script mkpart primary 1025 $SWAP_SIZE
   parted -a optimal $DRIVE --script name 2 swap
 
   parted -a optimal $DRIVE --script mkpart primary $SWAP_SIZE -- -1
@@ -324,13 +326,19 @@ NETWORK="iwd broadcom-wl"
 OPENSSH="openssh"
 OTHERS="neofetch"
 
-pacstrap /mnt base base-devel linux linux-firmware man-db man-pages texinfo grub efibootmgr $EDITOR $DEPENDENCIES $NETWORK $OPENSSH $OTHERS
+pacstrap /mnt base base-devel linux linux-firmware man-db man-pages texinfo grub efibootmgr ${EDITOR} ${DEPENDENCIES} ${NETWORK} ${OPENSSH} ${OTHERS}
 
 # +-+-+-+-+-+-+-+-+
 # SETUP /ETC/FSTAB
 # +-+-+-+-+-+-+-+-+
 
 genfstab -U /mnt >> /mnt/etc/fstab
+
+# +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+# COPYING MIRRORLIST TO NEW INSTALLATION
+# +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/
 
 # +-+-+-+-+-+-+-
 # CHROOT SCRIPT
