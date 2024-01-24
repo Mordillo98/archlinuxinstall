@@ -346,14 +346,6 @@ cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/
 
 arch-chroot /mnt /bin/bash << EOF
 
-# +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-# ENABLE MIRRORS FROM $MIRROR_LINK
-# +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-
-printf "\n${YELLOW}Setting up the best mirrors from ${REFLECTOR_COUNTRY} for $HOSTNAME...\n\n${NC}"
-
-reflector --country ${REFLECTOR_COUNTRY} --age 12 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
-
 pacman -Sy > /dev/null
 
 # +-+-+-+-+-+ 
